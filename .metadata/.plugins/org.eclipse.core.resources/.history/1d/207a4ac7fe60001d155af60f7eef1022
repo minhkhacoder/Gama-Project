@@ -1,0 +1,46 @@
+/**
+* Name: ModelChouChevLoup
+* Based on the internal empty template. 
+* Author: KHA
+* Tags: 
+*/
+
+
+model ModelChouChevLoup
+
+/* Insert your model definition here */
+
+
+
+global {
+	geometry shape <- square(3000#m);
+	float max_carrying_capacity <- 10.0;
+}
+
+grid plot width:30 height:30 neighbors:8 {
+	float biomass;
+	float carrying_capacity;
+	rgb color <- rgb(0,255*biomass/max_carrying_capacity,0)
+		update: rgb(0,255*biomass/max_carrying_capacity,0);
+	init {
+		
+	}
+	
+	aspect plotCarryingCapacity {
+		draw square(1) color: rgb(0,255*carrying_capacity/max_carrying_capacity,0);
+	}
+}
+
+
+
+experiment ChouChevLoup  {
+	output {
+	 display biomass { 
+		grid plot border: #limegreen;
+	 }
+	 display carryingCapacity { 
+		species plot aspect: plotCarryingCapacity;
+	 }
+
+	}
+}

@@ -1,0 +1,32 @@
+/**
+* Name: ModelChouChevLoup
+* Based on the internal empty template. 
+* Author: KHA
+* Tags: 
+*/
+
+
+model ModelChouChevLoup
+
+/* Insert your model definition here */
+
+
+
+global {
+	geometry shape <- square(3000#m);
+}
+
+grid plot width:30 height:30 {
+	string state;
+}
+
+
+
+experiment ChouChevLoup  {
+	output {
+	 display biomass { 
+		grid plot border: #limegreen;
+	 }
+
+	}
+}

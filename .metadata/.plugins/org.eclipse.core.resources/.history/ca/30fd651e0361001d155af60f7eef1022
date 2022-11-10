@@ -1,0 +1,68 @@
+/**
+* Name: ModelChouChevLoup
+* Based on the internal empty template. 
+* Author: KHA
+* Tags: 
+*/
+
+
+model ModelChouChevLoup
+
+/* Insert your model definition here */
+
+
+
+global {
+	geometry shape <- square(3000#m);
+	float max_carrying_capacity <- 10.0;
+	float growth_rate <- 0.2;
+	
+	init {
+		create wolf number: 10;
+	}
+}
+
+grid plot width:30 height:30 neighbors:8 {
+	float biomass;
+	float carrying_capacity;
+	rgb color <- rgb(0,255 * biomass / max_carrying_capacity,0)
+		update: rgb(0,255 * biomass / max_carrying_capacity,0);
+		
+	init {
+		carrying_capacity <- rnd(max_carrying_capacity);
+		biomass <- rnd(carrying_capacity);
+		color <- rgb(0,255 * biomass / max_carrying_capacity,0);
+	}
+	
+	aspect plotCarryingCapacity {
+		draw circle(50) color: rgb(0,255 * carrying_capacity / max_carrying_capacity,0);
+	}
+	
+	reflex grow { 		
+	    if(carrying_capacity != 0) {
+	    	biomass <- biomass * (1 + growth_rate * (1 - biomass / carrying_capacity));
+	    }
+	}
+
+}
+
+species wolf {
+	aspect whiteCircle {
+		draw circle(20) color: #white;
+	}
+}
+
+
+
+experiment ChouChevLoup  {
+	output {
+	 display biomass { 
+		grid plot border: #lightslategrey;
+		species wolf aspect: whiteCircle;
+	 }
+	 display carrying_capacity { 
+		species plot aspect: plotCarryingCapacity;
+	 }
+
+	}
+}
